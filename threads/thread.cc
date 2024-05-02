@@ -32,9 +32,25 @@
 //	"threadName" is an arbitrary string, useful for debugging.
 //----------------------------------------------------------------------
 
+Thread::Thread(char* threadName, int threadPriority)
+{
+    name = new char[strlen(threadName)];
+    strcpy(name, threadName);
+    stackTop = NULL;
+    stack = NULL;
+    status = JUST_CREATED;
+    priority = threadPriority;
+#ifdef USER_PROGRAM
+    space = NULL;
+#endif
+}
+
 Thread::Thread(char* threadName)
 {
-    name = threadName;
+    // allocate thread name in heap
+    name = new char[strlen(threadName)];
+    strcpy(name, threadName);
+    priority = 5; // set default priority to 5 (low)
     stackTop = NULL;
     stack = NULL;
     status = JUST_CREATED;
